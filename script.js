@@ -338,3 +338,7 @@ window.simulateConnect = simulateConnect;
 window.setNetwork = setNetwork;
 window.selectMode = selectMode;
 window.copyCA = copyCA;
+window.simulateDeployment = simulateDeployment;
+window.runSnipeDemo = runSnipeDemo;
+window.runFarmDemo = runFarmDemo;
+window.runSwarmDemo = runSwarmDemo;
