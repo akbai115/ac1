@@ -29,7 +29,7 @@
                     AlphaClaw
                 </a>
                 <div class="nav-actions">
-                    <div class="ca-pill" onclick="copyCA()">
+                    <div class="ca-pill" onclick="copyCA()" style="min-width: 140px;">
                         <span class="ca-label">CA:</span>
                         <span class="ca-addr">824s8M...pump</span>
                     </div>
@@ -354,7 +354,9 @@
                 <div class="action-btn-sm orange">TEST MODE</div>
                 <div class="action-btn-sm active" style="color:var(--neon-green)">● LIVE</div>
                 <div class="action-btn-sm active" style="color:#bb88ff">● TRADING</div>
-                <div class="action-btn-sm">8jo1NCLK...</div>
+                <div class="action-btn-sm" onclick="copyCA()"
+                    style="cursor: pointer; border-color: var(--neon-green-dim); color: var(--neon-green);">
+                    824s8M...pump</div>
                 <div class="action-btn-sm" onclick="showPage('home')">Disconnect</div>
             </div>
         </header>
