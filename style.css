@@ -551,6 +551,66 @@ nav {
     margin-bottom: 1rem;
 }
 
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ca-pill {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(0, 255, 157, 0.15);
+    padding: 6px 14px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'JetBrains Mono', monospace;
+    user-select: none;
+}
+
+.ca-pill:hover {
+    background: rgba(0, 255, 157, 0.05);
+    border-color: var(--neon-green);
+    box-shadow: 0 0 15px var(--neon-green-dim);
+}
+
+.ca-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.ca-addr {
+    font-size: 0.75rem;
+    color: var(--neon-green);
+    letter-spacing: 0.5px;
+}
+
+/* Copied Animation */
+@keyframes copyPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+        background: rgba(0, 255, 157, 0.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.ca-pill.copied {
+    animation: copyPulse 0.4s ease-out;
+    border-color: var(--neon-green);
+}
+
 .agent-info {
     display: flex;
     align-items: center;

@@ -29,6 +29,10 @@
                     AlphaClaw
                 </a>
                 <div class="nav-actions">
+                    <div class="ca-pill" onclick="copyCA()">
+                        <span class="ca-label">CA:</span>
+                        <span class="ca-addr">824s8M...pump</span>
+                    </div>
                     <div class="toggle-container">
                         <div class="toggle-btn" id="devnet-toggle" onclick="setNetwork('devnet')">Devnet</div>
                         <div class="toggle-btn active" id="mainnet-toggle" onclick="setNetwork('mainnet')">Mainnet</div>
@@ -42,9 +46,9 @@
     <!-- Home Page -->
     <main id="home-page" class="page active" style="padding-top: 100px;">
         <section class="hero container reveal">
-            <h1>Teach your OpenClaw to <span>snipe launches</span> & <span>optimize yield</span> on Solana.</h1>
-            <p>Your local engine watches pump.fun and DEXs, snipes migrations, farms liquidity dips — everything
-                is managed by a local signing node behind your private RPC.</p>
+            <h1>Your rules. <span>AlphaClaw executes.</span> You sleep.</h1>
+            <p>Your local engine watches pump.fun and DEXs, snipes migrations, and farms liquidity — managed by a secure
+                signing node behind your private RPC.</p>
 
             <div class="cta-group reveal" style="margin-top: 3rem;">
                 <button class="btn-large" onclick="openWalletModal()">Connect Wallet</button>

@@ -310,6 +310,25 @@ function startLiveBlocks() {
     }, 2000);
 }
 
+async function copyCA() {
+    const ca = "824s8Mv422yeC1jukfjKYCYe2eFvYTQEY2C47wFRpump";
+    try {
+        await navigator.clipboard.writeText(ca);
+        const pill = document.querySelector('.ca-pill');
+        const label = pill.querySelector('.ca-label');
+
+        pill.classList.add('copied');
+        label.innerText = "COPIED!";
+
+        setTimeout(() => {
+            pill.classList.remove('copied');
+            label.innerText = "CA:";
+        }, 2000);
+    } catch (err) {
+        console.error('Failed to copy CA:', err);
+    }
+}
+
 // Expose to window for index.html onclick handlers
 window.showPage = showPage;
 window.connectPhantom = connectPhantom;
@@ -318,3 +337,4 @@ window.closeWalletModal = closeWalletModal;
 window.simulateConnect = simulateConnect;
 window.setNetwork = setNetwork;
 window.selectMode = selectMode;
+window.copyCA = copyCA;
