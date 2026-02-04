@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlphaClaw | Autonomous Solana Trading & Liquidity Suite</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo" onclick="showPage('home')">
+                    <img src="ac1.png" alt="🦞">
+                    AlphaClaw
+                </a>
+                <div class="nav-actions">
+                    <div class="toggle-container">
+                        <div class="toggle-btn" id="devnet-toggle" onclick="setNetwork('devnet')">Devnet</div>
+                        <div class="toggle-btn active" id="mainnet-toggle" onclick="setNetwork('mainnet')">Mainnet</div>
+                    </div>
+                    <button class="btn-test-sol" id="btn-test-sol" style="display: none;">Get Test SOL</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <main id="home-page" class="page active" style="padding-top: 100px;">
+        <section class="hero container reveal">
+            <h1>Teach your OpenClaw to <span>snipe launches</span> & <span>optimize yield</span> on Solana.</h1>
+            <p>Your local engine watches pump.fun and DEXs, snipes migrations, farms liquidity dips — everything
+                is managed by a local signing node behind your private RPC.</p>
+
+            <div class="cta-group reveal" style="margin-top: 3rem;">
+                <button class="btn-large" onclick="openWalletModal()">Connect Wallet</button>
+                <button class="btn-secondary" onclick="showPage('connect')">Try Demo</button>
+            </div>
+
+            <div class="info-boxes reveal" style="margin-top: 5rem;">
+                <div class="info-box float-anim">
+                    <h3>Find the newest Solana memecoin launch</h3>
+                    <p>AlphaClaw monitors pump.fun 24/7, filtering for liquid migrations based on your specific
+                        criteria.</p>
+                </div>
+                <div class="info-box float-anim" style="animation-delay: 0.5s;">
+                    <h3>Snipe it fast + buy the dip on SOL while you're sleeping</h3>
+                    <p>Automated execution ensures you're first in line, with built-in dip buying strategies to maximize
+                        your entry.</p>
+                </div>
+            </div>
+
+            <div class="features reveal">
+                <div class="feature-card">
+                    <h4>Sniping Skills 🦞</h4>
+                    <p>Installs as an OpenClaw skill. Monitors launches, snipes migrations, hunts yield across Solana.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h4>Smart Vault 🦞</h4>
+                    <p>Rule-based Solana vault. Set max trade size, allowed tokens, daily limits. Rules cannot be
+                        broken.</p>
+                </div>
+                <div class="feature-card">
+                    <h4>Multi-Monitor 🦞</h4>
+                    <p>Run multiple monitors. They share signals and coordinate together. One secure execution layer.
+                    </p>
+                </div>
+            </div>
+
+            <div class="autonomy-box reveal">
+                <div class="status-dot"></div>
+                <h3>24/7 Engine Execution</h3>
+                <p>Set your rules once. The engine runs 24/7 — sniping migrations, farming yields, arbitraging. Pause or
+                    change rules anytime with a single command.</p>
+            </div>
+
+            <div class="timeline terminal reveal">
+                <div class="timeline-entry"><span class="timestamp">[04:15 AM]</span> Detected new pump.fun launch at
+                    $0.0008</div>
+                <div class="timeline-entry"><span class="timestamp">[04:15 AM]</span> RPC execution: 0.3 SOL swap →
+                    Confirmed via Jupiter Aggregator</div>
+                <div class="timeline-entry"><span class="timestamp">[04:16 AM]</span> Liquidity monitor: Volatility
+                    spike →
+                    Rebalancing position</div>
+                <div class="timeline-entry"><span class="timestamp">[04:17 AM]</span> <span
+                        style="color:var(--neon-green)">Node Confirmation: "Transaction successful. Yield optimization
+                        complete 🦞"</span></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Wallet Selection Modal -->
+    <div id="wallet-modal" class="modal-overlay" onclick="closeWalletModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-modal" onclick="closeWalletModal()">&times;</span>
+            <h3>Connect to Solana</h3>
+            <p>Select your preferred wallet to begin authenticating with your OpenClaw node.</p>
+
+            <div class="wallet-options">
+                <button class="wallet-btn" onclick="connectPhantom()">
+                    <img src="https://phantom.app/favicon.ico" alt="Phantom">
+                    <span>Phantom Wallet</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connect Page (Stage 1) -->
+    <div id="connect-page" class="page" style="padding-top: 150px;">
+        <div class="container connect-container-refined">
+            <div class="step-bar">
+                <div class="step active"></div>
+                <div class="step"></div>
+                <div class="step"></div>
+            </div>
+
+            <h2>Connect to your OpenClaw</h2>
+            <p class="subtitle">Securely link your Sniping Engine and verify your Solana Vault.</p>
+
+            <div class="connect-card">
+                <div class="input-group">
+                    <label>Gateway URL</label>
+                    <input type="text" id="gateway-url" placeholder="" autocomplete="off">
+                </div>
+                <p class="hint-text">Run <span>openclaw status</span> to find your gateway URL</p>
+
+                <div id="agent-status-card" class="agent-status-card" style="display: none;">
+                    <div class="agent-header">
+                        <div class="agent-info">
+                            <span class="lobster-emoji">🦞</span>
+                            <span class="agent-name">Molty</span>
+                        </div>
+                        <div class="active-dot"></div>
+                    </div>
+                    <div class="status-divider"></div>
+                    <div class="skills-section">
+                        <label>Current skills:</label>
+                        <div class="skills-tags">
+                            <span class="skill-tag">snipe-engine</span>
+                            <span class="skill-tag">liquidity-miner</span>
+                            <span class="skill-tag">vault-guardian</span>
+                            <span class="skill-tag">dex-interface</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-connect-action" id="connect-btn" onclick="simulateConnect()">Connect</button>
+            </div>
+
+            <button class="btn-continue-action" id="continue-btn" disabled onclick="showPage('rules')">
+                Continue →
+            </button>
+        </div>
+    </div>
+
+    <!-- Configuration Page (Stage 2) -->
+    <div id="rules-page" class="page" style="padding-top: 150px;">
+        <div class="container connect-container-refined" style="max-width: 800px;">
+            <div class="step-bar">
+                <div class="step active"></div>
+                <div class="step active"></div>
+                <div class="step"></div>
+            </div>
+
+            <h2>Configure System Strategies</h2>
+            <p class="subtitle">Molty will execute snipes and trades within these rule-sets.</p>
+
+            <div class="rules-section">
+                <label class="section-label">Execution Mode</label>
+                <div class="mode-options">
+                    <div class="mode-card" onclick="selectMode(this)">
+                        <div class="mode-title"><span class="icon">🛡️</span> Passive Sentry</div>
+                        <p>Only executes on direct manual confirmation or scheduled DCA.</p>
+                    </div>
+                    <div class="mode-card active" onclick="selectMode(this)">
+                        <div class="mode-title"><span class="icon">⚖️</span> Market Seeker</div>
+                        <p>Executes on established trends and confirmed 10% arbitrage gaps.</p>
+                    </div>
+                    <div class="mode-card" onclick="selectMode(this)">
+                        <div class="mode-title"><span class="icon">🎯</span> Apex Hunter</div>
+                        <p>Actively hunts yield, micro-arbitrage, and significant dips.</p>
+                    </div>
+                    <div class="mode-card" onclick="selectMode(this)">
+                        <div class="mode-title"><span class="icon">🔥</span> Sniper Elite <span class="badge">ULTRA HIGH
+                                RISK</span></div>
+                        <p>Snipes new pump.fun launches, hunts 100x gems, ultra-fast profit-taking.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-section">
+                <label class="section-label">Safety Corridors</label>
+                <div class="limits-grid">
+                    <div class="input-group">
+                        <label>Max per Trade</label>
+                        <div class="input-with-suffix">
+                            <input type="text" value="0.5">
+                            <span class="suffix">SOL</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Daily Exposure Limit</label>
+                        <div class="input-with-suffix">
+                            <input type="text" value="2.0">
+                            <span class="suffix">SOL</span>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Max Slippage</label>
+                        <div class="input-with-suffix">
+                            <input type="text" value="1.0">
+                            <span class="suffix">%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="rules-section">
+                <label class="section-label">Allowed Liquidity Pools</label>
+                <div class="tag-selector">
+                    <div class="tag active">SOL</div>
+                    <div class="tag active">USDC</div>
+                    <div class="tag">USDT</div>
+                    <div class="tag">JUP</div>
+                    <div class="tag">RAY</div>
+                    <div class="tag">BONK</div>
+                    <div class="tag">WIF</div>
+                    <div class="tag">NEW</div>
+                </div>
+
+                <label class="section-label" style="margin-top: 1.5rem;">Target DEXs</label>
+                <div class="tag-selector">
+                    <div class="tag active">Jupiter</div>
+                    <div class="tag active">Raydium</div>
+                    <div class="tag">Orca</div>
+                    <div class="tag active">Pump.fun</div>
+                    <div class="tag">Meteora</div>
+                </div>
+            </div>
+
+            <div class="action-footer">
+                <button class="btn-back" onclick="showPage('connect')">← Back</button>
+                <button class="btn-finalize" onclick="showPage('review')">Review Settings 🦞</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review & Deploy Page (Stage 3) -->
+    <div id="review-page" class="page" style="padding-top: 150px;">
+        <div class="container connect-container-refined" style="max-width: 800px;">
+            <div class="step-bar">
+                <div class="step active"></div>
+                <div class="step active"></div>
+                <div class="step active"></div>
+            </div>
+
+            <h2>Finalize Local Deployment</h2>
+            <p class="subtitle">Review the operational parameters for Molty before activation.</p>
+
+            <div class="summary-card">
+                <div class="summary-item">
+                    <span class="label">Local Node</span>
+                    <span class="value">Molty 🦞</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Trading Style</span>
+                    <span class="value" style="color: var(--neon-green)">Market Seeker</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Max per Snipe</span>
+                    <span class="value">0.5 SOL</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Daily Exposure</span>
+                    <span class="value">2.0 SOL</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Target Assets</span>
+                    <span class="value" style="color: var(--neon-green)">SOL, USDC, NEW</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">Execution Routes</span>
+                    <span class="value" style="color: var(--neon-green)">Jupiter, Raydium, Pump.fun</span>
+                </div>
+            </div>
+
+            <div class="deployment-steps-card">
+                <label class="section-label" style="font-size: 0.75rem;">Deployment Status</label>
+                <div class="step-list">
+                    <div class="step-item">
+                        <div class="checkbox"></div>
+                        <span>Create Local Solana Vault</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="checkbox"></div>
+                        <span>Install alphaclaw-sniper on local node</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="checkbox"></div>
+                        <span>Connect Jupiter & Raydium APIs</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="checkbox"></div>
+                        <span>Enable autonomous execution</span>
+                    </div>
+                    <div class="step-item">
+                        <div class="checkbox"></div>
+                        <span>Systems Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="action-footer">
+                <button class="btn-back" onclick="showPage('rules')">← Edit Configuration</button>
+                <button class="btn-finalize" id="deploy-btn" onclick="simulateDeployment()">Deploy & Activate
+                    🦞</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Overlay (Full Screen Cyber-Grid) -->
+    <div id="dashboard-page" class="page dashboard-overlay">
+        <header class="dashboard-header">
+            <div class="header-brand">
+                <div class="brand-text">ALPHACLAW</div>
+                <div class="status-pills">
+                    <span class="pill trading">TRADING</span>
+                    <span class="pill mode">Moderate Mode</span>
+                </div>
+            </div>
+            <div class="header-actions">
+                <div class="action-btn-sm">DEVNET</div>
+                <div class="action-btn-sm active">MAINNET</div>
+                <div class="action-btn-sm blue">Get Test SOL</div>
+                <div class="action-btn-sm orange">TEST MODE</div>
+                <div class="action-btn-sm active" style="color:var(--neon-green)">● LIVE</div>
+                <div class="action-btn-sm active" style="color:#bb88ff">● TRADING</div>
+                <div class="action-btn-sm">8jo1NCLK...</div>
+                <div class="action-btn-sm" onclick="showPage('home')">Disconnect</div>
+            </div>
+        </header>
+
+        <div class="cyber-grid">
+            <!-- Row 1 Left: Stats Summary (4 Columns) -->
+            <div class="grid-summary">
+                <div class="cyber-card stat-v2">
+                    <label>Today's Trades</label>
+                    <div class="val">46</div>
+                    <div class="sub">LAST_UPDATE: 2s ago</div>
+                </div>
+                <div class="cyber-card stat-v2">
+                    <label>Daily Spent</label>
+                    <div class="val" style="color: #ffaa44;">0.70 <span style="font-size:0.7rem; color: #444;">/ 2
+                            SOL</span></div>
+                    <div class="sub">LIMIT_RESETS: 1h 12m</div>
+                </div>
+                <div class="cyber-card stat-v2">
+                    <label>Total Profit</label>
+                    <div class="val red">-0.078 <span style="font-size:0.6rem; color: #444;">SOL</span></div>
+                    <div class="sub">7D_CHANGE: +1.22 SOL</div>
+                </div>
+                <div class="cyber-card stat-v2">
+                    <label>Safe Status</label>
+                    <div class="val green"><span style="font-size:1.2rem; vertical-align: middle;">✓</span></div>
+                    <div class="sub">ALL RULES ENFORCED</div>
+                </div>
+            </div>
+
+            <!-- Row 2 Left: Large Terminal -->
+            <div class="grid-terminal cyber-card terminal-v2">
+                <div class="terminal-header-slim">
+                    <div class="header-left">
+                        <span class="status-indicator"></span>
+                        <span>LIVE_ACTIVITY_FEED</span>
+                    </div>
+                    <div class="header-filters">
+                        <span class="filter-tag trade active">TRADE</span>
+                        <span class="filter-tag scan active">SCAN</span>
+                        <span class="filter-tag learn active">LEARN</span>
+                        <span class="filter-tag block active">BLOCK</span>
+                    </div>
+                </div>
+                <div class="terminal-body" id="main-terminal">
+                    <!-- Logs here -->
+                </div>
+            </div>
+
+            <!-- Row 2 Right: Sidebar -->
+            <div class="grid-sidebar sidebar-v2">
+                <div class="agent-shield-v2">
+                    <label class="sidebar-label">CONNECTED OPENCLAW</label>
+                    <div class="agent-header-compact">
+                        <div style="font-size: 1.5rem;">🦞</div>
+                        <div class="agent-info-compact">
+                            <div class="name">Molty</div>
+                            <div class="status" style="color: #444;">Not configured</div>
+                        </div>
+                        <div class="status-glow-dot" style="margin-left: auto;"></div>
+                    </div>
+
+                    <label class="sidebar-label" style="margin-top: 15px;">Active skills:</label>
+                    <div class="skills-pills">
+                        <span class="skill-tag active">klaude-trader</span>
+                        <span class="skill-tag active">smart-safe</span>
+                        <span class="skill-tag active">dex-app</span>
+                    </div>
+                </div>
+
+                <div class="cyber-card" style="flex: 1;">
+                    <label class="sidebar-label">SAFE RULES</label>
+                    <div class="rules-list">
+                        <div class="rule-row"><span>Max trade</span><span>0.5 SOL</span></div>
+                        <div class="rule-row"><span>Daily limit</span><span>2 SOL</span></div>
+                        <div class="rule-row"><span>Slippage</span><span>1%</span></div>
+                        <div class="rule-row"><span>Tokens</span><span class="highlight">SOL, USDC</span></div>
+                    </div>
+                </div>
+
+                <div class="swarm-box">
+                    <label class="sidebar-label">SWARM MODE</label>
+                    <p>Connect more OpenClaw to share learnings and coordinate trades.</p>
+                    <div
+                        style="margin-top: 10px; border: 1px dashed #333; height: 35px; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #444; font-size: 0.7rem; cursor: pointer;">
+                        + Add Claw (Coming Soon)
+                    </div>
+                </div>
+
+                <button class="btn-pause-v2">
+                    || Pause Trading
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demos -->
+    <div id="snipe-demo-page" class="page" style="padding-top: 150px;">
+        <div class="container" style="text-align: center;">
+            <h2>Sniping Demo 🦞</h2>
+            <div class="demo-visual terminal" id="snipe-logs">
+                <div style="color: #666;">// Click the button below to start the simulation...</div>
+            </div>
+            <button class="btn-large" onclick="runSnipeDemo()">Start Snipe Simulation</button>
+        </div>
+    </div>
+
+    <div id="farm-demo-page" class="page" style="padding-top: 150px;">
+        <div class="container" style="text-align: center;">
+            <h2>Farming Demo 🦞</h2>
+            <div class="demo-visual" id="farm-viz">
+                <div class="terminal" id="farm-logs" style="height: 100%; width: 100%; border: none; padding: 0;">
+                    <div style="color: #666;">// Click the button below to start farming...</div>
+                </div>
+            </div>
+            <button class="btn-large" onclick="runFarmDemo()">Run Farm Demo</button>
+        </div>
+    </div>
+
+    <div id="swarm-demo-page" class="page" style="padding-top: 150px;">
+        <div class="container" style="text-align: center;">
+            <h2>Swarm Demo 🦞</h2>
+            <div class="swarm-agents">
+                <div class="agent-card" id="agent-1">
+                    <h3>Monitor 1</h3>
+                    <p>Mempool Scan: Raydium</p>
+                </div>
+                <div class="agent-card" id="agent-2">
+                    <h3>Monitor 2</h3>
+                    <p>Mempool Scan: Orca</p>
+                </div>
+                <div class="agent-card" id="agent-3">
+                    <h3>Monitor 3</h3>
+                    <p>Mempool Scan: Meteora</p>
+                </div>
+            </div>
+            <div class="demo-visual terminal" id="swarm-logs" style="height: 200px; margin-top: 2rem;">
+                <div style="color: #666;">// Click to activate the swarm...</div>
+            </div>
+            <button class="btn-large" style="margin-top: 2rem;" onclick="runSwarmDemo()">Activate Swarm</button>
+        </div>
+    </div>
+
+    <!-- Documentation Page -->
+    <div id="docs-page" class="page" style="padding-top: 150px;">
+        <div class="container" style="max-width: 900px;">
+            <div style="font-family: 'JetBrains Mono', monospace; color: var(--neon-green); margin-bottom: 2rem;">
+                <pre style="line-height: 1.2;">
+╔═╗║  ╠═╗║ ║╔═╗╔═╗║  ╔═╗╦   ╦
+╠═╣║  ╠═╝╠═╣╠═╣║  ║  ╠═╣║ ║ ║
+╩ ╩╩═╝╩  ╩ ╩╩ ╩╚═╝╩═╝╩ ╩╚═╩═╝</pre>
+                <h2 style="margin-top: 1rem;">// DOCUMENTATION</h2>
+                <p style="color: #889988;">The Smart Vault execution layer for OpenClaw</p>
+            </div>
+
+            <div class="terminal"
+                style="padding: 2.5rem; line-height: 1.6; text-align: left; font-family: 'Inter', sans-serif;">
+                <h3 style="color: white; border-bottom: 1px solid #222; padding-bottom: 10px;">Why This Exists</h3>
+                <p>OpenClaw is built around a simple idea: an autonomous monitor that actually does things. It sends
+                    emails, books meetings, and runs system commands. But the moment your monitor touches financial
+                    liquidity, “actually doing things” becomes a liability.</p>
+                <p>AlphaClaw solves this by sitting between your OpenClaw instance and the Solana blockchain. It
+                    enforces hard limits on trade sizes, daily exposure, and slippage cap. It scores migrations for
+                    liquidity depth before your engine can act on them. </p>
+
+                <h3 style="color: white; border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 2rem;">How It
+                    Connects</h3>
+                <p>AlphaClaw operates as a specialized skill for your local OpenClaw gateway (ws://127.0.0.1:18789).
+                    Once standard handshake is verified, AlphaClaw pulls your node's active skills and walks you through
+                    security rule configuration. Once deployed, the monitor runs continuously—scanning DEXes and
+                    enforcing your limits on every automated action.</p>
+
+                <h3 style="color: white; border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 2rem;">
+                    Execution Strategy Modes</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 1rem;">
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--neon-green);">🛡️ Passive Sentry</strong>
+                        <p style="font-size: 0.85rem; color: #889988; margin-top: 5px;">Manual trades only. Engine never
+                            buys on its own. Best for situational monitoring.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--neon-green);">⚖️ Market Seeker</strong>
+                        <p style="font-size: 0.85rem; color: #889988; margin-top: 5px;">Moderate mode. Executes on
+                            confirmed liquid moves and arbitrage gaps > 4%.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--neon-green);">🎯 Apex Hunter</strong>
+                        <p style="font-size: 0.85rem; color: #889988; margin-top: 5px;">Aggressive mode. Actively hunts
+                            yield, micro-arbitrage, and market dips.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                        <strong style="color: var(--neon-green);">🔥 Sniper Elite</strong>
+                        <p style="font-size: 0.85rem; color: #889988; margin-top: 5px;">High intensity. Snipes new
+                            liquid migrations and early-stage memecoin launches.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: white; border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 2rem;">Safety
+                    Guardrails</h3>
+                <ul style="color: #889988; font-size: 0.95rem;">
+                    <li><strong style="color:white">Max Trade Size:</strong> Default 0.5 SOL limit per single execution.
+                    </li>
+                    <li><strong style="color:white">Daily Exposure:</strong> Total SOL limit per 24-hour rolling window
+                        (Default 2.0 SOL).</li>
+                    <li><strong style="color:white">Slippage Cap:</strong> Maximum acceptable execution price variance
+                        (Default 1%).</li>
+                </ul>
+
+                <h3 style="color: white; border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 2rem;">
+                    Non-Custodial Design</h3>
+                <p style="font-size: 0.9rem; color: #889988;">AlphaClaw is a rule-based execution layer. Your Solana
+                    wallet connection is used for identity and signature verification only—not for custodial private key
+                    access. Your keys never leave your local machine.</p>
+            </div>
+
+            <button class="btn-secondary" style="margin-top: 3rem;" onclick="showPage('home')">← Back to Suite</button>
+        </div>
+    </div>
+
+    <!-- Global Footer -->
+    <footer class="site-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                ALPHACLAW // © 2026_OPENCLAW_SKILL
+            </div>
+            <div class="footer-nav">
+                <a href="#" class="footer-link" onclick="showPage('docs')">DOCUMENTATION</a>
+                <a href="https://github.com/openclaw" target="_blank" class="footer-link">GITHUB</a>
+                <a href="#" class="footer-link">STATUS</a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="/script.js"></script>
+</body>
+
+</html>
